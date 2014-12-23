@@ -74,6 +74,7 @@ class MongoHelper {
 	/**
 	 * Open database connection and define collection
 	 * @param mixed string / boolean $collection
+	 * $dns
 	 * mongodb://localhost
 	 * mongodb://user:password@localhost
 	 * mongodb://user:password@localhost/database
@@ -87,7 +88,7 @@ class MongoHelper {
 	 *
 	 * 
 	 */
-	public function __construct($dns="", $persist=false, $collection = false) {
+	public function __construct($dns="", $collection = false) {
 		
 		// enable dynamic collections
 		// this will help to create new collections even faster, without the need to create new classes
@@ -106,7 +107,7 @@ class MongoHelper {
 		} else {
 			
 			if(class_exists('MongoClient')){
-				$mongo = new MongoClient($dns, array('persist'=>$persist));
+				$mongo = new MongoClient($dns);
 			}else{
 				$mongo = new Mongo($dns);
 			}
