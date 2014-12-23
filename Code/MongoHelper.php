@@ -166,7 +166,7 @@ class MongoHelper {
 	 * @return mixed array / boolean
 	 */
 	public function update($filters, $newData) {
-		return $this->collection->update($filters, $newData);
+		return $this->collection->update($filters, $newData, array('upsert'=>false, 'multiple'=>true));
 	}
 	
 	/**
@@ -211,7 +211,7 @@ class MongoHelper {
 	 * @param string $id
 	 * @return object
 	 */
-	public function mongoid($id) {
+	public function mongoid($id=null) {
 		return new MongoId($id);
 	}
 	
