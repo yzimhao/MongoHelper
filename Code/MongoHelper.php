@@ -183,7 +183,7 @@ class MongoHelper {
 	 * @return mixed array / boolean
 	 */
 	public function update($filters, $newData) {
-		return $this->collection->update($filters, $newData, array('upsert'=>false, 'multiple'=>true));
+		return $this->collection->update($filters, $newData, array('upsert'=>false, 'multi'=>true));
 	}
 	
 	/**
