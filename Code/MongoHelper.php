@@ -74,8 +74,20 @@ class MongoHelper {
 	/**
 	 * Open database connection and define collection
 	 * @param mixed string / boolean $collection
+	 * mongodb://localhost
+	 * mongodb://user:password@localhost
+	 * mongodb://user:password@localhost/database
+	 * mongodb://example1.com:27017,example2.com:27017
+	 * mongodb://localhost,localhost:27018,localhost:27019
+	 * mongodb://host1,host2,host3/?slaveOk=true
+	 * mongodb://localhost/?safe=true
+	 * mongodb://host1,host2,host3/?safe=true;w=2;wtimeoutMS=2000
+	 * mongodb://rs1.example.com:27017,rs2.example.com:27017/?replicaSet=myReplSetName
+	 * mongodb://localhost/?journal=true&w=majority&wTimeoutMS=20000
+	 *
+	 * 
 	 */
-	public function __construct($collection = false) {
+	public function __construct($dns="", $persist=false, $collection = false) {
 		
 		// enable dynamic collections
 		// this will help to create new collections even faster, without the need to create new classes
@@ -93,7 +105,11 @@ class MongoHelper {
 			$mongo = self::$mongoObj;
 		} else {
 			
-			$mongo = new Mongo();
+			if(class_exists('MongoClient')){
+				$mongo = new MongoClient($dns, array('persist'=>$persist));
+			}else{
+				$mongo = new Mongo($dns);
+			}
 			
 			// cache mongodb object
 			self::$mongoObj = $mongo;
